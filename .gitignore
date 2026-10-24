@@ -1,0 +1,80 @@
+# Byte-compiled / optimized / DLL files
+*$py.class
+*.py[cod]
+__pycache__
+__pycache__/
+
+# Unit test / coverage reports
+*.cover
+*.py,cover
+.alpackages/
+.cache
+.coverage
+.coverage.*
+.dccache
+.hypothesis/
+.nox/
+.pytest_cache
+.pytest_cache/
+.tox/
+cover/
+coverage.xml
+htmlcov/
+nosetests.xml
+test_coverage
+uv.lock
+
+# Scanner Works 
+.scannerwork
+
+# Environments
+.cursor/
+.env
+.venv
+.venv/
+ENV/
+activate
+activate/
+deactivate
+deactivate/
+env.bak/
+env/
+venv.bak/
+venv/
+
+# mypy
+.dmypy.json
+.mypy_cache/
+dmypy.json
+
+# PyCharm
+.idea
+.idea/
+
+# Mac directory file
+.DS_Store
+.dockerrc
+.logs
+.snyk
+.trunk
+.trunk/
+.vscode
+.vscode/
+logs
+pyflow.lock
+
+# Temp fields
+*.*~
+~*.*
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.windsurf/rules/snyk_rules.md
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.cursor/rules/snyk_rules.mdc
+
+#Ignore insiders AI rules
+.github/instructions/codacy.instructions.md
