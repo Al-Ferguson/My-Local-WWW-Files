@@ -48,11 +48,11 @@ def generate_event(events: dict) -> ev.Event:
         url=events['ticketUrl']
     )
 
-def build_calendar() -> cal.Calendar:
+def build_calendar(thisCal: cal.Calendar) -> cal.Calendar:
     ''' Build an iCal calendar from MKE Jazz Live events. '''
     for show in SHOWS:
-        MKE_JAZZ_LIVE_CAL.events.append(generate_event(show))
-    return MKE_JAZZ_LIVE_CAL
+        thisCal.events.append(generate_event(show))
+    return thisCal
     
 # endregion Functions
 
@@ -61,7 +61,7 @@ def build_calendar() -> cal.Calendar:
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
 
-MKE_JAZZ_LIVE_CAL: cal.Calendar = cal.Calendar(
+new_iCal: cal.Calendar = cal.Calendar(
     calscale="GREGORIAN",
     color="#C2407F",
     description=["MKE Jazz Live event Calendar"],
@@ -83,7 +83,7 @@ def application(environ, start_fn):
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
-    yield cs.calendar_to_ics(build_calendar()).encode("utf-8")
+    yield cs.calendar_to_ics(build_calendar(new_iCal)).encode("utf-8")
 
 
 if __name__ == "__main__":
