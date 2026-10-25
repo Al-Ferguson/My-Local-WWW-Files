@@ -6,7 +6,7 @@
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
 __updated__ = "2026-10-24 06:26:08"
-__version__: str = "0.1.1"
+__version__: str = "0.1.2"
 # endregion Author & Version
 
 # region Imports
@@ -28,30 +28,30 @@ from ical.calendar_stream import IcsCalendarStream as cs
 
 # region Functions
 
-def generate_event(events: dict) -> ev.Event:
+def generate_event(thisEvent: dict) -> ev.Event:
     ''' Generate an iCal event from a MKE Jazz Live event. '''
     now: dt.datetime = dt.datetime.now(tz=None)
-    date: str = str(dt.date.fromisoformat(events['date']))
-    if events['endTime'] is None:
+    date: str = str(dt.date.fromisoformat(thisEvent['date']))
+    if thisEvent['endTime'] is None:
         end_time: str = '23:59:59'
     else:
-        end_time = events['endTime']
+        end_time = thisEvent['endTime']
     
     return ev.Event(
         uid=f"{now!s}@MKEJazzLive.wsgi",
         dtstamp=now,
-        dtstart=dt.datetime.fromisoformat(f"{date}T{events['time']!s}"),
+        dtstart=dt.datetime.fromisoformat(f"{date}T{thisEvent['time']!s}"),
         dtend=dt.datetime.fromisoformat(f"{date}T{end_time}"),
-        summary=events['artist'],
-        description=f"{events['price']!s}\n\n{events['note']!s}\n\nEntered by: {events['source']!s}",
-        location=f"{events['venue']!s}\n{events['address']!s}",
-        url=events['ticketUrl']
+        summary=thisEvent['artist'],
+        description=f"{thisEvent['price']!s}\n\n{thisEvent['note']!s}\n\nAdded by: {thisEvent['source']!s}",
+        location=f"{thisEvent['venue']!s}\n{thisEvent['address']!s}",
+        url=thisEvent['ticketUrl']
     )
 
-def build_calendar(thisCal: cal.Calendar) -> cal.Calendar:
+def build_calendar(thisCal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
     ''' Build an iCal calendar from MKE Jazz Live events. '''
-    for show in SHOWS:
-        thisCal.events.append(generate_event(show))
+    for event in events:
+        thisCal.events.append(generate_event(event))
     return thisCal
     
 # endregion Functions
@@ -76,14 +76,14 @@ new_iCal: cal.Calendar = cal.Calendar(
 
 def main() -> None:
     ''' Main entry point for the script when called directly. '''
-    print(cs.calendar_to_ics(build_calendar()))
+    print(cs.calendar_to_ics(build_calendar(new_iCal, SHOWS)))
 
 def application(environ, start_fn):
     ''' Main Entry Point for WSGI application for Publishing an iCal calendar. '''
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
-    yield cs.calendar_to_ics(build_calendar(new_iCal)).encode("utf-8")
+    yield cs.calendar_to_ics(build_calendar(new_iCal, SHOWS)).encode("utf-8")
 
 
 if __name__ == "__main__":
