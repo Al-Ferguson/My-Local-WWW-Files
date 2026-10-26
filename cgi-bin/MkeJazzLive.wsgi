@@ -1,15 +1,15 @@
-''' Use https://www.MKEjazz.live/shows.json to create an vCalendar format 
-    subscription file for Apple & Google Calendar subscriptions.
+''' Use web based calendar JSON to create a vCalendar for Apple & Google Calendar 
+    subscriptions. Customize the "-- Customize here --" sections to your needs.
 
-    Note: This version uses the icalendar module to create the vCalendar format file. 
-    Note: Run this locally via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
+    NOTE: This version uses the iCalendar module to create the vCalendar format file. 
+    NOTE: I Run this via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
 '''
 
 # region Author & Version
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
-__updated__ = "2026-10-25 23:40:08"
-__version__: str = "0.1.4"
+__updated__ = "2026-10-26 12:40:00"
+__version__: str = "0.1.5"
 # endregion Author & Version
 
 # region Imports
@@ -31,7 +31,7 @@ from icalendar import Event as ev
 # region Functions
 
 def generate_event(thisEvent: dict) -> ev:
-    ''' Generate an iCal event from a MKE Jazz Live event. -- Customize here '''
+    ''' Generate an event from event. -- Customize here -- MKE Jazz Live '''
     if thisEvent['endTime'] is None:
         end_time: str = '23:59:59'
     else:
@@ -47,14 +47,14 @@ def generate_event(thisEvent: dict) -> ev:
     )
 
 def build_calendar(thisCal: cal, events: tuple[dict]) -> cal:
-    ''' Build an iCal calendar from the passed events. '''
+    ''' Add Events to iCalendar events. '''
     for event in events:
         thisCal.add_component(generate_event(event)) 
     return thisCal
     
 # endregion Functions
 
-# region Global Variables -- Customize here
+# region Global Variables -- Customize here -- MKE Jazz Live
 
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
@@ -75,16 +75,15 @@ newICal: cal = cal.new(
 # endregion Global Variables
 
 def main() -> None:
-    ''' Main entry point for the script when called directly. '''
+    ''' Main entry point for directly calling the script when testing. '''
     print(build_calendar(newICal, SHOWS).to_ical().decode())
 
 def application(environ, start_fn):
-    ''' Main Entry Point for WSGI application for Publishing an iCal calendar. '''
+    ''' Main Entry Point as WSGI application for Publishing the VCalendar. '''
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
     yield build_calendar(newICal, SHOWS).to_ical()
-
 
 if __name__ == "__main__":
     main()
