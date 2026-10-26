@@ -6,7 +6,7 @@
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
 __updated__ = "2026-10-24 06:26:08"
-__version__: str = "0.1.2"
+__version__: str = "0.1.3"
 # endregion Author & Version
 
 # region Imports
@@ -29,19 +29,19 @@ from ical.calendar_stream import IcsCalendarStream as cs
 # region Functions
 
 def generate_event(thisEvent: dict) -> ev.Event:
-    ''' Generate an iCal event from a MKE Jazz Live event. '''
+    ''' Generate an iCal event from a MKE Jazz Live event. -- Customize here '''
     now: dt.datetime = dt.datetime.now(tz=None)
-    date: str = str(dt.date.fromisoformat(thisEvent['date']))
+    date: dt.date = thisEvent['date']
     if thisEvent['endTime'] is None:
         end_time: str = '23:59:59'
     else:
         end_time = thisEvent['endTime']
     
     return ev.Event(
-        uid=f"{now!s}@MKEJazzLive.wsgi",
+        uid=f"{hash(f"{date!s}T{thisEvent['time']!s}-{thisEvent['venue']!s}")}@MKEJazzLive.wsgi",
         dtstamp=now,
-        dtstart=dt.datetime.fromisoformat(f"{date}T{thisEvent['time']!s}"),
-        dtend=dt.datetime.fromisoformat(f"{date}T{end_time}"),
+        dtstart=dt.datetime.fromisoformat(f"{date!s}T{thisEvent['time']!s}"),
+        dtend=dt.datetime.fromisoformat(f"{date!s}T{end_time}"),
         summary=thisEvent['artist'],
         description=f"{thisEvent['price']!s}\n\n{thisEvent['note']!s}\n\nAdded by: {thisEvent['source']!s}",
         location=f"{thisEvent['venue']!s}\n{thisEvent['address']!s}",
@@ -49,14 +49,14 @@ def generate_event(thisEvent: dict) -> ev.Event:
     )
 
 def build_calendar(thisCal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
-    ''' Build an iCal calendar from MKE Jazz Live events. '''
+    ''' Build an iCal calendar from the passed events. '''
     for event in events:
         thisCal.events.append(generate_event(event))
     return thisCal
     
 # endregion Functions
 
-# region Global Variables
+# region Global Variables -- Customize here
 
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
