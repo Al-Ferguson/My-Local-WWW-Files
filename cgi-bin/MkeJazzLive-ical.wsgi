@@ -61,11 +61,10 @@ def build_calendar(thisCal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
 
-new_iCal: cal.Calendar = cal.new(
+new_iCal: cal.Calendar = cal.Calendar(
     calscale="GREGORIAN",
-    color="#D6D6D6",
+    color="#C2407F",
     description=["MKE Jazz Live event Calendar"],
-    language ="en",
     method="PUBLISH",
     name=["MKE Jazz Live"],
     prodid="-//MKE Jazz Live Event ICS Exporter//EN",
