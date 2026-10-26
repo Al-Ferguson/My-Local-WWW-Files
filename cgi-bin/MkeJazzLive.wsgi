@@ -38,14 +38,13 @@ def generate_event(thisEvent: dict) -> ev:
         end_time = thisEvent['endTime']   
     return ev.new(
         summary=thisEvent['artist'],
-        description=f"{thisEvent['price']!s}\n\n{thisEvent['note']!s}\n\nAdded by: {thisEvent['source']!s}",
-        location=f"{thisEvent['venue']!s}\n{thisEvent['address']!s}",
-        start=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{thisEvent['time']!s}").astimezone(tz),
-        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{end_time}").astimezone(tz),
-        organizer=f"{thisEvent['source']!s}",
+        description=f"{thisEvent['price']}\n\n{thisEvent['note']}\n\nAdded by: {thisEvent['source']}",
+        location=f"{thisEvent['venue']}\n{thisEvent['address']}",
+        start=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{thisEvent['time']!s}").astimezone(glblTZ),
+        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{end_time}").astimezone(glblTZ),
+        organizer=f"{thisEvent['source']}",
         url=thisEvent['ticketUrl']
     )
-
 
 def build_calendar(thisCal: cal, events: tuple[dict]) -> cal:
     ''' Build an iCal calendar from the passed events. '''
@@ -60,7 +59,8 @@ def build_calendar(thisCal: cal, events: tuple[dict]) -> cal:
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
 
-new_iCal: cal = cal.new(
+glblTZ = zi("America/Chicago")
+newICal: cal = cal.new(
     calscale="GREGORIAN",
     color="silver",
     description="MKE Jazz Live Events",
@@ -72,20 +72,18 @@ new_iCal: cal = cal.new(
     version="2.0"
     )
 
-tz = zi("America/Chicago")
-
 # endregion Global Variables
 
 def main() -> None:
     ''' Main entry point for the script when called directly. '''
-    print(build_calendar(new_iCal, SHOWS).to_ical().decode())
+    print(build_calendar(newICal, SHOWS).to_ical().decode())
 
 def application(environ, start_fn):
     ''' Main Entry Point for WSGI application for Publishing an iCal calendar. '''
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
-    yield build_calendar(new_iCal, SHOWS).to_ical()
+    yield build_calendar(newICal, SHOWS).to_ical()
 
 
 if __name__ == "__main__":

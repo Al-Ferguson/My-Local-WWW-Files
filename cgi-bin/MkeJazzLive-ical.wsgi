@@ -5,8 +5,8 @@
 # region Author & Version
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
-__updated__ = "2026-10-24 06:26:08"
-__version__: str = "0.1.3"
+__updated__ = "2026-10-26 12:26:00"
+__version__: str = "0.1.4"
 # endregion Author & Version
 
 # region Imports
@@ -48,11 +48,11 @@ def generate_event(thisEvent: dict) -> ev.Event:
         url=thisEvent['ticketUrl']
     )
 
-def build_calendar(thisCal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
+def build_calendar(thisICal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
     ''' Build an iCal calendar from the passed events. '''
     for event in events:
-        thisCal.events.append(generate_event(event))
-    return thisCal
+        thisICal.events.append(generate_event(event))
+    return thisICal
     
 # endregion Functions
 
@@ -61,7 +61,7 @@ def build_calendar(thisCal: cal.Calendar, events: tuple[dict]) -> cal.Calendar:
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
 
-new_iCal: cal.Calendar = cal.Calendar(
+newICal: cal.Calendar = cal.Calendar(
     calscale="GREGORIAN",
     color="#C2407F",
     description=["MKE Jazz Live event Calendar"],
@@ -76,14 +76,14 @@ new_iCal: cal.Calendar = cal.Calendar(
 
 def main() -> None:
     ''' Main entry point for the script when called directly. '''
-    print(cs.calendar_to_ics(build_calendar(new_iCal, SHOWS)))
+    print(cs.calendar_to_ics(build_calendar(newICal, SHOWS)))
 
 def application(environ, start_fn):
     ''' Main Entry Point for WSGI application for Publishing an iCal calendar. '''
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
-    yield cs.calendar_to_ics(build_calendar(new_iCal, SHOWS)).encode("utf-8")
+    yield cs.calendar_to_ics(build_calendar(newICal, SHOWS)).encode("utf-8")
 
 
 if __name__ == "__main__":
