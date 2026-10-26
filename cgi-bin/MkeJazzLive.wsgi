@@ -32,16 +32,13 @@ from icalendar import Event as ev
 
 def generate_event(thisEvent: dict) -> ev:
     ''' Generate an event from event. -- Customize here -- MKE Jazz Live '''
-    if thisEvent['endTime'] is None:
-        end_time: str = '23:59:59'
-    else:
-        end_time = thisEvent['endTime']   
+    endTime = '23:59:59' if thisEvent['endTime'] is None else thisEvent['endTime']
     return ev.new(
         summary=thisEvent['artist'],
         description=f"{thisEvent['price']}\n\n{thisEvent['note']}\n\nAdded by: {thisEvent['source']}",
         location=f"{thisEvent['venue']}\n{thisEvent['address']}",
         start=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{thisEvent['time']!s}").astimezone(glblTZ),
-        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{end_time}").astimezone(glblTZ),
+        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{endTime}").astimezone(glblTZ),
         organizer=f"{thisEvent['source']}",
         url=thisEvent['ticketUrl']
     )
