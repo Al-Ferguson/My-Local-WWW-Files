@@ -33,8 +33,8 @@ def generate_event(thisEvent: dict) -> ev:
         summary=thisEvent['artist'],
         description=f"{thisEvent['price']}\n\n{thisEvent['note']}\n\nAdded by: {thisEvent['source']}",
         location=f"{thisEvent['venue']}\n{thisEvent['address']}",
-        start=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{thisEvent['time']!s}").astimezone(glblTZ),
-        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{endTime}").astimezone(glblTZ),
+        start=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{thisEvent['time']!s}").astimezone(evTZ),
+        end=dt.datetime.fromisoformat(f"{thisEvent['date']!s}T{endTime}").astimezone(evTZ),
         organizer=f"{thisEvent['source']}",
         url=thisEvent['ticketUrl']
     )
@@ -62,7 +62,7 @@ def build_calendar() -> cal:
 # region Global Variables -- Customize here -- MKE Jazz Live
 
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
-glblTZ = zi("America/Chicago")
+evTZ = zi("America/Chicago")
 
 # endregion Global Variables
 
