@@ -7,3 +7,4 @@
 httpx>=0.28.1
 icalendar>=7.3.0
 #
+types-icalendar>=6.3.0
