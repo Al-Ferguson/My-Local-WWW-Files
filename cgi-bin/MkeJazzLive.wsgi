@@ -72,9 +72,8 @@ def main() -> None:
 
 def application(environ, start_fn):
     ''' Main Entry Point as WSGI application for Publishing the VCalendar. '''
-    start_fn('200 OK', 
-             [('Content-Type', 'text/calendar'),
-              ('Cache-Control', 'no-cache, must-revalidate')])
+    start_fn('200 OK', [('Content-Type', 'text/calendar'),
+                        ('Cache-Control', 'no-cache, must-revalidate')])
     yield build_calendar().to_ical()
 
 if __name__ == "__main__":
