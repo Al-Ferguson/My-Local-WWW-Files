@@ -11,10 +11,6 @@ __version__: str = "0.1.4"
 
 # region Imports
 # Script Dependencies:
-#   - requests
-#   - csv
-#   - json
-#   - typing
 
 import datetime as dt
 
@@ -32,16 +28,13 @@ def generate_event(thisEvent: dict) -> ev.Event:
     ''' Generate an iCal event from a MKE Jazz Live event. -- Customize here '''
     now: dt.datetime = dt.datetime.now(tz=None)
     date: dt.date = thisEvent['date']
-    if thisEvent['endTime'] is None:
-        end_time: str = '23:59:59'
-    else:
-        end_time = thisEvent['endTime']
+    endTime = '23:59:59' if thisEvent['endTime'] is None else thisEvent['endTime']
     
     return ev.Event(
         uid=f"{hash(f"{date!s}T{thisEvent['time']!s}-{thisEvent['venue']!s}")}@MKEJazzLive.wsgi",
         dtstamp=now,
         dtstart=dt.datetime.fromisoformat(f"{date!s}T{thisEvent['time']!s}"),
-        dtend=dt.datetime.fromisoformat(f"{date!s}T{end_time}"),
+        dtend=dt.datetime.fromisoformat(f"{date!s}T{endTime}"),
         summary=thisEvent['artist'],
         description=f"{thisEvent['price']!s}\n\n{thisEvent['note']!s}\n\nAdded by: {thisEvent['source']!s}",
         location=f"{thisEvent['venue']!s}\n{thisEvent['address']!s}",

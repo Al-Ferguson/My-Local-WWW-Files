@@ -14,10 +14,6 @@ __version__: str = "0.1.5"
 
 # region Imports
 # Script Dependencies:
-#   - requests
-#   - csv
-#   - json
-#   - typing
 
 import datetime as dt
 from zoneinfo import ZoneInfo as zi
