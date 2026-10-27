@@ -39,9 +39,21 @@ def generate_event(thisEvent: dict) -> ev:
         url=thisEvent['ticketUrl']
     )
 
-def build_calendar(thisCal: cal, events: tuple[dict]) -> cal:
-    ''' Add Events to iCalendar events. '''
-    for event in events:
+def build_calendar() -> cal:
+    ''' Add Events to iCalendar events. -- Customize here -- MKE Jazz Live'''
+    shows: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
+    thisCal: cal = cal.new(
+        calscale="GREGORIAN",
+        color="silver",
+        description="MKE Jazz Live Events",
+        language="EN",
+        method="PUBLISH",
+        name="MKE Jazz Live Calendar",
+        organization="MKE Jazz Live",
+        source="https://www.MKEjazz.live",
+        version="2.0"
+        )
+    for event in shows:
         thisCal.add_component(generate_event(event)) 
     return thisCal
     
@@ -50,33 +62,20 @@ def build_calendar(thisCal: cal, events: tuple[dict]) -> cal:
 # region Global Variables -- Customize here -- MKE Jazz Live
 
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
-SHOWS: tuple[dict] = tuple(rq.get(EVENTS_URL).json()['shows'])
-
 glblTZ = zi("America/Chicago")
-newICal: cal = cal.new(
-    calscale="GREGORIAN",
-    color="silver",
-    description="MKE Jazz Live Events",
-    language="EN",
-    method="PUBLISH",
-    name="MKE Jazz Live Calendar",
-    organization="MKE Jazz Live",
-    source="https://www.MKEjazz.live",
-    version="2.0"
-    )
 
 # endregion Global Variables
 
 def main() -> None:
     ''' Main entry point for directly calling the script when testing. '''
-    print(build_calendar(newICal, SHOWS).to_ical().decode())
+    print(build_calendar().to_ical().decode())
 
 def application(environ, start_fn):
     ''' Main Entry Point as WSGI application for Publishing the VCalendar. '''
     start_fn('200 OK', 
              [('Content-Type', 'text/calendar'),
               ('Cache-Control', 'no-cache, must-revalidate')])
-    yield build_calendar(newICal, SHOWS).to_ical()
+    yield build_calendar().to_ical()
 
 if __name__ == "__main__":
     main()
