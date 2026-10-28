@@ -9,7 +9,7 @@
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
 __updated__ = "2026-10-26 12:40:00"
-__version__: str = "0.1.5"
+__version__: str = "0.1.6"
 # endregion Author & Version
 
 # region Imports
