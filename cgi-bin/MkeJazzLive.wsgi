@@ -10,7 +10,7 @@ NOTE: I Run this via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
 # region Author & Version
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
-__updated__ = "2026-10-31 22:40:00"
+__updated__: str = "2026-10-31 22:40:00"
 __version__: str = "0.1.7"
 # endregion Author & Version
 
