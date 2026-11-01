@@ -8,7 +8,7 @@ NOTE: I Run this via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
 """
 
 # region Author
-__author__: str = "Al Ferguson aferguson@neptunescove.org"
+__author__: str = "Al Ferguson"
 __created__: str = "2026-10-24 14:15:00"
 __updated__: str = "2026-10-31 22:40:00"
 __version__: str = "0.1.7"
