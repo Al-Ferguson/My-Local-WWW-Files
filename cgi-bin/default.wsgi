@@ -1,5 +1,5 @@
-
-CONTENT = b'''
+# noqa: CPY001, D100
+CONTENT = b"""
 <html>
 <head>
 <title>My web site runs on Malt Whiskey</title>
@@ -29,11 +29,10 @@ see the <a href="http://www.modwsgi.org/">documentation</a>.
 </table>
 </body>
 </html>
-'''
+"""
 
-def application(environ, start_fn):
-    response_headers = [('Content-type', 'text/html'),
-                    ('Content-Length', str(len(CONTENT)))]
+def application(environ, start_fn):  # noqa: ANN001, ANN201, ARG001, D103
+    response_headers = [("Content-type", "text/html"),
+                    ("Content-Length", str(len(CONTENT)))]
     start_fn("200 OK", response_headers)
     return [CONTENT]
-
