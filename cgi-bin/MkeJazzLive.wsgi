@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Al Ferguson
-"""Use web JSON to create vCalendar for Apple & Google Calendar subscriptions.
+"""Use JSON to create vCalendar for Apple & Google Calendar subscriptions.
 
 Customize the "-- Customize here --" sections to your needs
 
@@ -7,12 +7,13 @@ NOTE: This uses the iCalendar module to create the vCalendar format file.
 NOTE: I Run this via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
 """
 
-# region Author & Version
+# region Author
 __author__: str = "Al Ferguson"
 __email__: str = "aferguson@neptunescove.org"
+__created__: str = "2026-10-24 14:15:00"
 __updated__: str = "2026-10-31 22:40:00"
 __version__: str = "0.1.7"
-# endregion Author & Version
+# endregion Author
 
 # region Imports
 # Script Dependencies:
