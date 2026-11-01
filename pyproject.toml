@@ -31,9 +31,9 @@ dependencies = [
 MkeJazzLive = "cgi-bin.MkeJazzLive:main"
 
 [project.urls]
-url = "https://github.com/AlFerguson/public_html"
+url = "https://github.com/AlFerguson/My-Local-WWW-Files"
 url_type = "github"
-documentation = "https://docs.github.com/AlFerguson/public_html"
+documentation = "https://docs.github.com/AlFerguson/My-Local-WWW-Files"
 
 [tool.uv]
 exclude-newer = "7 days" 
