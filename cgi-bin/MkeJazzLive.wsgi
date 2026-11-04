@@ -71,7 +71,7 @@ def main() -> None:
     """Entry point for testing when script is run directly."""
     print(build_calendar().to_ical().decode())  # noqa: T201
 
-def application(environ, start_fn):  # noqa: ANN001, ANN201, ARG001
+def app(environ, start_fn):  # noqa: ANN001, ANN201, ARG001
     """Entry Point for publishing a VCalendar when accessed via WSGI."""
     start_fn("200 OK", [("Content-Type", "text/calendar"),
                         ("Cache-Control", "no-cache, must-revalidate")])
