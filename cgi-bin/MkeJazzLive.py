@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Al Ferguson
+# Copyright (c) 2026 Al Ferguson    # noqa: N999
 """Use JSON to create vCalendar for Apple & Google Calendar subscriptions.
 
 Customize the "-- Customize here --" sections to your needs
