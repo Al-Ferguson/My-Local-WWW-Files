@@ -4,7 +4,8 @@
 Customize the "-- Customize here --" sections to your needs
 
 NOTE: This uses the iCalendar module to create the vCalendar format file.
-NOTE: I Run this via http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.wsgi
+NOTE: via local httpd server: http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.pl
+NOTE: via Orbstack gunicorn Container: https://gunicorn.public-html.orb.local
 """
 
 # region Author
