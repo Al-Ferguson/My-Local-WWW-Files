@@ -1,6 +1,6 @@
 services:
  gunicorn:
-    image: mkejazzlive
+    image: mkejazzlive:localbuild
     build:
       context: .
       dockerfile: ./MkeJazzLive.Dockerfile
