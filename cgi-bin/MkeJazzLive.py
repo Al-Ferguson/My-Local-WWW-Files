@@ -11,8 +11,8 @@ NOTE: via Orbstack gunicorn Container: https://gunicorn.public-html.orb.local
 # region Author
 __author__: str = "Al Ferguson"
 __created__: str = "2026-10-24 14:15:00"
-__updated__: str = "2026-10-31 22:40:00"
-__version__: str = "0.1.7"
+__updated__: str = "2026-11-04 23:40:00"
+__version__: str = "0.1.8"
 # endregion Author
 
 # region Imports
