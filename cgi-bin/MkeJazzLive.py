@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Al Ferguson    # noqa: N999
 """Use JSON to create vCalendar for Apple & Google Calendar subscriptions.
 
-Customize the "-- Customize here --" sections to your needs
+Customize the "-- Customize here -- module_name" sections to your needs
 
 NOTE: This uses the iCalendar module to create the vCalendar format file.
 NOTE: via local httpd server: http://lyceum.local/~aferguson/cgi-bin/MkeJazzLive.pl
