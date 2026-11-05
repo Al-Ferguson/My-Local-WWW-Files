@@ -18,5 +18,5 @@ USER appuser
 # If no wsgi.py, change app:app to wsgi_file:app, pointing at wsgi_file.py file's app() entry point.
 CMD ["gunicorn", "MkeJazzLive:app", \
      "--bind", "0.0.0.0:8000", "--workers", "4", \
-     "--log-level", "debug", "--http-protocols", "h2,h1", \
+     "--log-level", "debug", "--http-protocols", "h1", \
      "--graceful-timeout", "30", "--timeout", "120"]

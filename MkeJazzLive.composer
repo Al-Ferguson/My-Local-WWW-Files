@@ -1,10 +1,14 @@
 services:
- gunicorn:
+  gunicorn:
     image: mkejazzlive:localbuild
     build:
       context: .
       dockerfile: ./MkeJazzLive.Dockerfile
     environment:
       - TZ=America/Chicago
+    network_mode:
+      host
+    labels:
+      - dev.orbstack.domains=mkejazzlive.lyceum.local
     ports:
       - 8000:8000
