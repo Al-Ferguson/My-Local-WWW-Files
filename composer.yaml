@@ -1,8 +1,10 @@
 services:
  gunicorn:
-    image: myjazzlive
+    image: mkejazzlive
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      - TZ=America/Chicago
     ports:
       - 8000:8000
