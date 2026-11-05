@@ -3,7 +3,7 @@ services:
     image: mkejazzlive
     build:
       context: .
-      dockerfile: ./MkeJazzLive-Dockerfile
+      dockerfile: ./MkeJazzLive.Dockerfile
     environment:
       - TZ=America/Chicago
     ports:
