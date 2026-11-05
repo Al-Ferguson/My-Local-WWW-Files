@@ -11,4 +11,5 @@ semgrep>=1.182.0
 annotated-types>=0.8.0
 mypy-extensions>=1.1.0
 typing_extensions>=4.16.0
+types-icalendar>=6.3.0
 #
