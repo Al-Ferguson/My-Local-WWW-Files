@@ -30,7 +30,7 @@ from icalendar import Calendar, Event
 
 def generate_event(event: dict) -> Event:
     """Generate an event from event. -- Customize here -- MKE Jazz Live."""
-    endtime = "23:59:59" if event["endTime"] is None else event["endTime"]
+    endtime = ENDTIME if event["endTime"] is None else event["endTime"]
     return Event.new(
         summary=event["artist"],
         description=f"{event["price"]}\n\n{event["note"]}\n\nAdded by: {event["source"]}",  # noqa: E501
@@ -43,7 +43,7 @@ def generate_event(event: dict) -> Event:
 
 def build_calendar() -> Calendar:
     """Add Events to iCalendar events. -- Customize here -- MKE Jazz Live."""
-    shows: tuple[dict] = tuple(rq.get(EVENTS_URL).json()["shows"])
+    shows: tuple[dict, ...] = tuple(rq.get(EVENTS_URL).json()["shows"])
     calendar: Calendar = Calendar.new(
         calscale="GREGORIAN",
         color="silver",
@@ -63,6 +63,7 @@ def build_calendar() -> Calendar:
 
 # region Global Variables -- Customize here -- MKE Jazz Live
 
+ENDTIME: str = "23:59:59"
 EVENTS_URL: str = "https://www.MKEjazz.live/shows.json"
 EVENTTZ = ZoneInfo("America/Chicago")
 
