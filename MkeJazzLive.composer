@@ -1,14 +1,30 @@
+name: gunicorn
 services:
-  gunicorn:
+  mkejazzlive:
     image: mkejazzlive:localbuild
     build:
       context: .
       dockerfile: ./MkeJazzLive.Dockerfile
     environment:
       - TZ=America/Chicago
-    network_mode:
-      host
-    labels:
-      - dev.orbstack.domains=mkejazzlive.lyceum.local
+    network_mode: host
     ports:
       - 8000:8000
+    restart: unless-stopped   # no
+    labels:
+      - "com.mkejazzlive.image.authors=Al Ferguson"
+      - "com.mkejazzlive.image.description=MKE Jazz Live Calendar WSGI Application"
+      - "com.mkejazzlive.image.created=2026-11-06T04:00:00Z"
+      - "com.mkejazzlive.image.version=00.01.00"
+      - "com.mkejazzlive.image.licenses=GPL-3.0"
+      - "dev.orbstack.domains=*.mkejazzlive.lyceum.local,*.mkejazzlive.orb.local,mkejazzlive.gunicorn.orb.local"
+
+networks:
+  default:
+    driver: bridge
+    internal: false
+  www-attachable:
+    attachable: true
+    driver: overlay
+    internal: true
+    name: attachable-network
